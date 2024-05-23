@@ -32,8 +32,7 @@ each new market date for each customer, or select only the unique market dates p
 (without purchase details) and number those visits. 
 HINT: One of these approaches uses ROW_NUMBER() and one uses DENSE_RANK(). */
 SELECT 
-    customer_id,
-    market_date,
+    customer_id, market_date,
     ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY market_date) AS visit_number
 FROM 
     customer_purchases;
@@ -43,15 +42,12 @@ then write another query that uses this one as a subquery (or temp table) and fi
 only the customer’s most recent visit. */
 WITH RecentVisits AS (
     SELECT 
-        customer_id,
-        market_date,
+        customer_id, market_date,
         ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY market_date DESC) AS reversed_visit_number
     FROM 
         customer_purchases
 )
-SELECT 
-    customer_id,
-    market_date
+SELECT  customer_id, market_date
 FROM 
     RecentVisits
 WHERE 
@@ -59,10 +55,7 @@ WHERE
 
 /* 3. Using a COUNT() window function, include a value along with each row of the 
 customer_purchases table that indicates how many different times that customer has purchased that product_id. */
-SELECT 
-    customer_id,
-    product_id,
-    market_date,
+SELECT  customer_id, product_id,market_date,
     COUNT(product_id) OVER (PARTITION BY customer_id, product_id) AS product_purchase_count
 FROM 
     customer_purchases;
@@ -79,8 +72,7 @@ Remove any trailing or leading whitespaces. Don't just use a case statement for 
 
 Hint: you might need to use INSTR(product_name,'-') to find the hyphens. INSTR will help split the column. */
 
-SELECT 
-    product_name,
+SELECT product_name,
     TRIM(SUBSTR(product_name, INSTR(product_name, '-') + 1)) AS description
 FROM 
     product
@@ -88,9 +80,7 @@ WHERE
     INSTR(product_name, '-') > 0;
 
 /* 2. Filter the query to show any product_size value that contain a number with REGEXP. */
-SELECT 
-    product_name,
-    product_size,
+SELECT  product_name,product_size,
     TRIM(SUBSTR(product_name, INSTR(product_name, '-') + 1)) AS description
 FROM 
     product
