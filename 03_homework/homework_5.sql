@@ -50,6 +50,8 @@ VALUES (8, 'Cherry Pie', '10"', 3, 'unit', CURRENT_TIMESTAMP);
 /* 1. Delete the older record for the whatever product you added. 
 
 HINT: If you don't specify a WHERE clause, you are going to have a bad time.*/
+DELETE FROM product_units
+WHERE product_id = (SELECT product_id FROM product_units WHERE product_name = 'Cherry Pie' ORDER BY snapshot_timestamp LIMIT 1);
 
 
 
@@ -70,4 +72,17 @@ Finally, make sure you have a WHERE statement to update the right row,
 	you'll need to use product_units.product_id to refer to the correct row within the product_units table. 
 When you have all of these components, you can run the update statement. */
 
-
+ALTER TABLE product_units
+ADD current_quantity INT;
+UPDATE product_units
+SET current_quantity = (
+    SELECT COALESCE(vi.quantity, 0)
+    FROM vendor_inventory vi
+    WHERE vi.product_id = product_units.product_id
+    ORDER BY vi.market_date DESC
+    LIMIT 1
+)
+WHERE product_id IN (
+    SELECT DISTINCT product_id
+    FROM vendor_inventory
+);
