@@ -98,15 +98,43 @@ WHERE
     INSTR(product_name, '-') > 0
     AND product_size REGEXP '[0-9]';
 
-
 -- UNION
 /* 1. Using a UNION, write a query that displays the market dates with the highest and lowest total sales.
 
 HINT: There are a possibly a few ways to do this query, but if you're struggling, try the following: 
 1) Create a CTE/Temp Table to find sales values grouped dates; 
-
-
 2) Create another CTE/Temp table with a rank windowed function on the previous query to create 
 "best day" and "worst day"; 
 3) Query the second temp table twice, once for the best day, once for the worst day, 
 with a UNION binding them. */
+
+-- Step 1
+WITH SalesByDate AS (
+    SELECT  market_date,
+        SUM(quantity * cost_to_customer_per_qty) AS total_sales
+    FROM customer_purchases
+    GROUP BY market_date
+),
+
+-- Step 2
+RankedSales AS (
+    SELECT market_date,total_sales,
+        RANK() OVER (ORDER BY total_sales DESC) AS rank_desc,
+        RANK() OVER (ORDER BY total_sales ASC) AS rank_asc
+    FROM SalesByDate
+)
+
+-- Step 3
+SELECT  market_date,total_sales,
+    'Best Day' AS day_type
+FROM RankedSales
+WHERE 
+    rank_desc = 1
+
+UNION
+
+SELECT market_date, total_sales,
+    'Worst Day' AS day_type
+FROM RankedSales
+WHERE 
+    rank_asc = 1;
