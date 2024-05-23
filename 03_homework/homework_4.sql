@@ -66,3 +66,47 @@ SELECT
     COUNT(product_id) OVER (PARTITION BY customer_id, product_id) AS product_purchase_count
 FROM 
     customer_purchases;
+
+-- String manipulations
+/* 1. Some product names in the product table have descriptions like "Jar" or "Organic". 
+These are separated from the product name with a hyphen. 
+Create a column using SUBSTR (and a couple of other commands) that captures these, but is otherwise NULL. 
+Remove any trailing or leading whitespaces. Don't just use a case statement for each product! 
+
+| product_name               | description |
+|----------------------------|-------------|
+| Habanero Peppers - Organic | Organic     |
+
+Hint: you might need to use INSTR(product_name,'-') to find the hyphens. INSTR will help split the column. */
+
+SELECT 
+    product_name,
+    TRIM(SUBSTR(product_name, INSTR(product_name, '-') + 1)) AS description
+FROM 
+    product
+WHERE 
+    INSTR(product_name, '-') > 0;
+
+/* 2. Filter the query to show any product_size value that contain a number with REGEXP. */
+SELECT 
+    product_name,
+    product_size,
+    TRIM(SUBSTR(product_name, INSTR(product_name, '-') + 1)) AS description
+FROM 
+    product
+WHERE 
+    INSTR(product_name, '-') > 0
+    AND product_size REGEXP '[0-9]';
+
+
+-- UNION
+/* 1. Using a UNION, write a query that displays the market dates with the highest and lowest total sales.
+
+HINT: There are a possibly a few ways to do this query, but if you're struggling, try the following: 
+1) Create a CTE/Temp Table to find sales values grouped dates; 
+
+
+2) Create another CTE/Temp table with a rank windowed function on the previous query to create 
+"best day" and "worst day"; 
+3) Query the second temp table twice, once for the best day, once for the worst day, 
+with a UNION binding them. */
