@@ -10,7 +10,7 @@ At the minimum it should have employee, order, sales, customer, and book entitie
 ## Question 2
 We want to create employee shifts, splitting up the day into morning and evening. Add this to the ERD.
 
-![image](https://github.com/littlehappy93/sql/assets/167244237/f308c222-5ef4-4280-8011-1f1c878e6caf)
+![image](https://github.com/littlehappy93/sql/assets/167244237/7f6c5d48-58f1-442a-ae2c-25235390aaba)
 
 
 ## Question 3
