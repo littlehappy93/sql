@@ -5,12 +5,12 @@ Create a logical model for a small bookstore. 📚
 
 At the minimum it should have employee, order, sales, customer, and book entities (tables). Determine sensible column and table design based on what you know about these concepts. Keep it simple, but work out sensible relationships to keep tables reasonably sized. Include a date table. There are several tools online you can use, I'd recommend [_Draw.io_](https://www.drawio.com/) or [_LucidChart_](https://www.lucidchart.com/pages/).
 
-![image](https://github.com/littlehappy93/sql/assets/167244237/3733d8f3-aea6-4bfe-aef6-577919583ed3)
+![image](https://github.com/littlehappy93/sql/assets/167244237/13e42057-904b-4ea1-b6db-2f1ed38b14a0)
 
 ## Question 2
 We want to create employee shifts, splitting up the day into morning and evening. Add this to the ERD.
 
-![image](https://github.com/littlehappy93/sql/assets/167244237/b32098d1-0859-42dd-9842-10e042c32e72)
+![image](https://github.com/littlehappy93/sql/assets/167244237/853a91ee-2d7b-49b8-9529-88026327e670)
 
 ## Question 3
 The store wants to keep customer addresses. Propose two architectures for the CUSTOMER_ADDRESS table, one that will retain changes, and another that will overwrite. Which is type 1, which is type 2?
@@ -52,6 +52,9 @@ Review the AdventureWorks Schema [here](https://i.stack.imgur.com/LMu4W.gif)
 Highlight at least two differences between it and your ERD. Would you change anything in yours?
 ```
 Your answer...
+1. The ERD is highly detailed, with each table containing numerous branches and categories. The main categories are highlighted in different colors and include additional explanatory notes. This design makes it easy for readers to understand the ERD and its underlying logic.
+2.There are clear arrows between the tables, and the primary keys (PK) and foreign keys (FK) are clearly indicated under each table.
+I will add the PK/FK and efficient arrow in my 2 ERD
 ```
 
 # Criteria
