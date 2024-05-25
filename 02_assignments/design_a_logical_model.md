@@ -1,21 +1,49 @@
 # Assignment 1: Design a Logical Model
-
+By Hui Li
 ## Question 1
 Create a logical model for a small bookstore. 📚
 
 At the minimum it should have employee, order, sales, customer, and book entities (tables). Determine sensible column and table design based on what you know about these concepts. Keep it simple, but work out sensible relationships to keep tables reasonably sized. Include a date table. There are several tools online you can use, I'd recommend [_Draw.io_](https://www.drawio.com/) or [_LucidChart_](https://www.lucidchart.com/pages/).
 
+![image](https://github.com/littlehappy93/sql/assets/167244237/3733d8f3-aea6-4bfe-aef6-577919583ed3)
+
 ## Question 2
 We want to create employee shifts, splitting up the day into morning and evening. Add this to the ERD.
+
+![image](https://github.com/littlehappy93/sql/assets/167244237/b32098d1-0859-42dd-9842-10e042c32e72)
 
 ## Question 3
 The store wants to keep customer addresses. Propose two architectures for the CUSTOMER_ADDRESS table, one that will retain changes, and another that will overwrite. Which is type 1, which is type 2?
 
 _Hint, search type 1 vs type 2 slowly changing dimensions._
 
+Type 1: Overwrite
+customer_id (Primary Key, Foreign Key)
+address_line1
+address_line2
+city
+province
+post_code
+country
+
+Type 2: Retain Changes
+address_id (Primary Key)
+customer_id (Foreign Key)
+address_line1
+address_line2
+city
+province
+post_code
+country
+start_date (Effective from date)
+end_date (Effective to date, NULL if current)
+
+
 Bonus: Are there privacy implications to this, why or why not?
 ```
 Your answer...
+Type 1 is mnimal privacy implications as store only retaines the current address.
+Type 2 is higher privacy implications as store retains whole historical addresses which could offence customers' privacy right. 
 ```
 
 ## Question 4
